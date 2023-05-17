@@ -21,8 +21,8 @@ def registration_view(request):
             return HttpResponseRedirect("/")
     else:
         form = RegistrationForm()
-        context = {'form': form}
-        return render(request, "registration.html", context)
+    context = {'form': form}
+    return render(request, "registration.html", context)
 
 
 
