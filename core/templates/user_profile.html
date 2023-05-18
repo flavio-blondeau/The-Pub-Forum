@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head_title %} {{ block.super }} - User {{ user }} {% endblock head_title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <h3>
+                {% if request.user == user %}
+                Your personal
+                {% endif %}
+                User profile
+            </h3>
+            <h2>User: {{ user }}</h2>
+        </div>
+    </div>
+{% endblock content %}
