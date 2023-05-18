@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %} {{ block.super }} - New Section {% endblock head_title %}
+
+{% block content %}
+   <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <h2>New Section</h2>
+            <form class="" method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-info" type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+{% endblock content %}

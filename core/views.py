@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
+from forum.models import Section
 
 
-def homepage(request):
-    return render(request, "homepage.html")
+class Homepage(ListView):
+    queryset = Section.objects.all()
+    template_name = "homepage.html"
 
 
 def user_profile(request, username):

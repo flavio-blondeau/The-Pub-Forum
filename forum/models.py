@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -13,6 +14,9 @@ class Section(models.Model):
 
     def __str__(self):
         return self.section_name
+
+    def get_absolute_url(self):
+        return reverse("show_section", kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Section'
