@@ -4,22 +4,40 @@
 {% block head_title %} {{ block.super }} - {{ discussion.discussion_title }} {% endblock head_title %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="row justify-content-center mx-auto">
       <div class="col-8">
-          <h1>{{ discussion.discussion_title }}</h1>
-          <h2>Author: {{ discussion.discussion_author }}</h2>
-          <h3>In: {{ discussion.discussion_section }}</h3>
+          <h2>{{ discussion.discussion_title }}</h2>
+          <h5 class="text-muted">{{ discussion.discussion_creation_data }}</h5>
+          <h5>In: {{ discussion.discussion_section }}</h5>
           {% for post in discussion_posts %}
-          <div class="card">
+          <div class="card my-2">
+              <div class="card-header py-0">
+                  <footer>{{ post.post_creation_data }}</footer>
+              </div>
               <div class="card-body">
-                  <h5 class="card-text">{{ post.post_author }}</h5>
-                  <p class="card-text">{{ post.post_creation_data }}</p>
-                  <p class="card-text">{{ post.post_content }}</p>
+                  <div class="row">
+                      <div class="col-xl-2 col-3 border-end px-1">
+                          <h5 class="card-text"><a class="text-decoration-none" href="{% url 'user_profile' username=post.post_author.username %}">{{ post.post_author }}</a></h5>
+                          <small class="card-text text-muted">User since: {{ post.post_author.date_joined|date:"M Y" }}</small>
+                          <small class="card-text text-muted">Posts: {{ post.post_author.posts.count }}</small>
+                      </div>
+                      <div class="col-xl-10 col-9 px-2">
+                          <p class="card-text my-0">{{ post.post_content|linebreaks }}</p>
+                      </div>
+                  </div>
+
+
               </div>
           </div>
           {% endfor %}
 
-          {% include 'answer_form.html' %}
+          {% if request.user.is_authenticated %}
+              {% include 'answer_form.html' %}
+          {% else %}
+              <div class="alert alert-info my-4" role="alert">
+                    You must <a href="{% url 'login' %}?next={{ request.get_full_path }}">log in</a> to write a post!
+              </div>
+          {% endif %}
       </div>
 </div>
 {% endblock content %}

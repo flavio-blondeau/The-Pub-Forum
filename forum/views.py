@@ -59,6 +59,7 @@ def show_discussion(request, pk):
     return render(request, "show_discussion.html", context)
 
 
+@login_required
 def add_post(request, pk):  # here the pk is the discussion's one
     discussion = get_object_or_404(Discussion, pk=pk)
     if request.method == 'POST':

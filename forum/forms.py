@@ -11,7 +11,7 @@ class DiscussionModelForm(forms.ModelForm):
     class Meta:
         model = Discussion
         fields = ['discussion_title', 'content']
-        widget = {
+        widgets = {
             "discussion_title": forms.TextInput(attrs={"placeholder": "Write here the title"})
         }
 
@@ -21,3 +21,9 @@ class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['post_content']
+        widgets = {
+            'post_content': forms.Textarea(attrs={'rows': '5'})
+        }
+        labels = {
+            'post_content': 'Add a Post'
+        }

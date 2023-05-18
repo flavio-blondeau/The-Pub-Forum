@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 {% for disc in section_discussions %}
-                    <p><a href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></p>
+                    <p><a class="text-decoration-none" href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></p>
                     <p>{{ disc.discussion_author }}</p>
                 {% endfor %}
             </div>
