@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -6,20 +6,22 @@
               rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
               crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/pubforum.css' %}">
         <title>{% block head_title %} The Pub Forum {% endblock head_title %}</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-dark mb-4" data-bs-theme="dark">
             <div class="container">
                 <a class="navbar-brand" href="/">
-<!--                    <img src="" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">-->
+                    <img src="{% static 'logo.png' %}" alt="Logo" width="50" height="50" class="d-inline-block align-text-center">
                     The Pub Forum
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex" role="search">
+                    <form class="d-flex me-auto" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search">
                         <button class="btn btn-outline-info" type="submit">Search</button>
                     </form>
