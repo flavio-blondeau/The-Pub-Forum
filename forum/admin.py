@@ -4,9 +4,9 @@ from .models import Discussion, Post, Section
 
 class DiscussionModelAdmin(admin.ModelAdmin):
     model = Discussion
-    list_display = ['disc_title', 'disc_section', 'disc_author']
-    search_fields = ['disc_title', 'disc_author']
-    list_filter = ['disc_creation_data', 'disc_section']
+    list_display = ['discussion_title', 'discussion_section', 'discussion_author']
+    search_fields = ['discussion_title', 'discussion_author']
+    list_filter = ['discussion_creation_data', 'discussion_section']
 
 
 class PostModelAdmin(admin.ModelAdmin):
@@ -18,7 +18,7 @@ class PostModelAdmin(admin.ModelAdmin):
 
 class SectionModelAdmin(admin.ModelAdmin):
     model = Section
-    list_display = ['section_name', 'section_desc']
+    list_display = ['section_name', 'section_description']
 
 
 admin.site.register(Discussion, DiscussionModelAdmin)

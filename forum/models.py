@@ -9,7 +9,7 @@ class Section(models.Model):
     Each section has several discussions.
     """
     section_name = models.CharField(max_length=100)
-    section_desc = models.CharField(max_length=200, blank=True, null=True)
+    section_description = models.CharField(max_length=200, blank=True, null=True)
     section_logo = models.ImageField(blank=True, null=True)
 
     def __str__(self):
@@ -29,13 +29,16 @@ class Discussion(models.Model):
     Every user can start a discussion.
     A discussion lies inside a section.
     """
-    disc_title = models.CharField(max_length=150)
-    disc_creation_data = models.DateField(auto_now_add=True)
-    disc_author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='discussions')
-    disc_section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    discussion_title = models.CharField(max_length=150)
+    discussion_creation_data = models.DateField(auto_now_add=True)
+    discussion_author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='discussions')
+    discussion_section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.disc_title
+        return self.discussion_title
+
+    def get_absolute_url(self):
+        return reverse("show_discussion", kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Discussion'

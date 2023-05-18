@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %} {{ block.super }} - {{ discussion.discussion_title }} {% endblock head_title %}
+
+{% block content %}
+<div class="row justify-content-center">
+      <div class="col-8">
+          <h1>{{ discussion.discussion_title }}</h1>
+          <h2>Author: {{ discussion.discussion_author }}</h2>
+          <h3>In: {{ discussion.discussion_section }}</h3>
+          {% for post in discussion_posts %}
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-text">{{ post.post_author }}</h5>
+                  <p class="card-text">{{ post.post_creation_data }}</p>
+                  <p class="card-text">{{ post.post_content }}</p>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+</div>
+{% endblock content %}

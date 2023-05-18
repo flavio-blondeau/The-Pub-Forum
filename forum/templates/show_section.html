@@ -7,11 +7,15 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div class="card">
-            <div class="card-body">
+            <div class="card-header">
                 <h3 class="card-title">{{ section.section_name }}</h3>
-                <p class="card-text">{{ section.section_desc }}</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <p class="card-text">{{ section.section_description }}</p>
+            </div>
+            <div class="card-body">
+                {% for disc in section_discussions %}
+                    <p><a href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></p>
+                    <p>{{ disc.discussion_author }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>
