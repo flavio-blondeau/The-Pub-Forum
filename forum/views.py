@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views.generic.edit import CreateView
 
-from .forms import DiscussionModelForm
+from .forms import DiscussionModelForm, PostModelForm
 from .mixins import StaffMixin
 from .models import Discussion, Post, Section
 
@@ -50,5 +51,24 @@ def create_discussion(request, pk):
 def show_discussion(request, pk):
     discussion = get_object_or_404(Discussion, pk=pk)
     discussion_posts = Post.objects.filter(post_discussion=discussion)
-    context = {'discussion': discussion, 'discussion_posts': discussion_posts}
+    answer_form = PostModelForm()
+    context = {'discussion': discussion,
+               'discussion_posts': discussion_posts,
+               'answer_form': answer_form
+               }
     return render(request, "show_discussion.html", context)
+
+
+def add_post(request, pk):  # here the pk is the discussion's one
+    discussion = get_object_or_404(Discussion, pk=pk)
+    if request.method == 'POST':
+        form = PostModelForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.post_discussion = discussion
+            form.instance.post_author = request.user
+            form.save()
+            discussion_url = reverse("show_discussion", kwargs={"pk": pk})
+            return HttpResponseRedirect(discussion_url)
+    else:
+        return HttpResponseBadRequest()

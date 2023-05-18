@@ -1,5 +1,5 @@
 from django import forms
-from .models import Discussion
+from .models import Discussion, Post
 
 
 class DiscussionModelForm(forms.ModelForm):
@@ -14,3 +14,10 @@ class DiscussionModelForm(forms.ModelForm):
         widget = {
             "discussion_title": forms.TextInput(attrs={"placeholder": "Write here the title"})
         }
+
+
+class PostModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ['post_content']
