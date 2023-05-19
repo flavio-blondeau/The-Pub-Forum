@@ -6,11 +6,11 @@
 {% block content %}
    <div class="row justify-content-center">
         <div class="col-6 text-center">
-            <h2>New Discussion in {{ section }} Section</h2>
+            <h2>New Discussion in: {{ section }}</h2>
             <form class="" method="POST" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 {{ form|crispy }}
-                <input class="btn btn-info" type="submit" value="Create">
+                <input class="btn btn-primary" type="submit" value="Create">
             </form>
         </div>
     </div>

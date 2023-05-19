@@ -4,14 +4,46 @@
 
 {% block content %}
     <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-10 text-center">
             <h3>
                 {% if request.user == user %}
                 Your personal
                 {% endif %}
                 User profile
             </h3>
-            <h2>User: {{ user }}</h2>
+            <hr>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h2>{{ user }}</h2>
+                User since: {{ user.date_joined|date:"M d, Y" }}
+                <br>
+                User discussions: {{ user.discussions.count }}
+                <br>
+                User posts: {{ user.posts.count }}
+            </div>
+            <div class="col-8">
+                <div>
+                    <h4>Started discussions:</h4>
+                </div>
+                {% for disc in user_discussions %}
+                <div class="card mb-4">
+                    <div class="card-body pb-2">
+                        <h4><a class="text-decoration-none" href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></h4>
+                        <h6 class="text-muted"> {{ disc.discussion_section }} &nbsp; - &nbsp; {{ disc.discussion_creation_data }}</h6>
+                    </div>
+                </div>
+                {% empty %}
+                    {% if request.user != user %}
+                    <h5>{{ user }} has started zero discussions!</h5>
+                    {% else %}
+                    <h5>You have not started any discussion yet!</h5>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}

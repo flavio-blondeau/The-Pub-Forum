@@ -6,18 +6,25 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-8">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">{{ section.section_name }}</h3>
-                <p class="card-text">{{ section.section_description }}</p>
-            </div>
+        <h1 >{{ section.section_name }}</h1>
+        <h4 class="text-muted">{{ section.section_description }}</h4>
+        <hr>
+        <a class="btn btn-primary" href="{% url 'create_discussion' pk=section.pk %}">New Discussion</a>
+
+        {% for disc in section_discussions %}
+        <div class="card my-2">
             <div class="card-body">
-                {% for disc in section_discussions %}
-                    <p><a class="text-decoration-none" href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></p>
-                    <p>{{ disc.discussion_author }}</p>
-                {% endfor %}
+                <h3><a class="text-decoration-none" href="{{ disc.get_absolute_url }}">{{ disc.discussion_title }}</a></h3>
+                Started on {{ disc.discussion_creation_data }} by
+                <a class="text-decoration-none" href="{% url 'user_profile' username=disc.discussion_author.username %}">
+                {{ disc.discussion_author }}
+                </a>
+                <br>
+                Last post: {{ disc.post_set.last.post_creation_data }}
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
+
 {% endblock content %}

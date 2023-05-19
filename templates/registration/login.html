@@ -10,7 +10,7 @@
             <form class="" action="{% url 'login' %}" method="POST" novalidate>
                 {% csrf_token %}
                 {{ form|crispy }}
-                <input class="btn btn-info" type="submit" value="Login">
+                <input class="btn btn-primary" type="submit" value="Login">
               <input class="" type="hidden" name="next" value="{{ next }}">
             </form>
             <br>

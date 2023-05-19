@@ -6,15 +6,61 @@
 {% block content %}
     <div class="row justify-content-center mx-auto">
         <div class="text-center">
-            <img class="img-fluid" src="{% static 'banner.png' %}" alt="ThePubForum">
-            <h1>Homepage - The Pub Forum</h1>
-            <br />
-            {% for section in object_list %}
-                <h4><a class="text-decoration-none" href="{{ section.get_absolute_url }}"><strong>{{ section.section_name }}</strong></a></h4>
-                <p>{{ section.section_description }}</p>
-                <img src="{{ section.section_logo.url }}" alt="Section logo">
-                <hr>
-            {% endfor %}
+            <img class="img-fluid mb-4" src="{% static 'banner.png' %}" alt="ThePubForum">
+            <h1 class="display-3">Homepage - The Pub Forum</h1>
         </div>
+    </div>
+    <div class="container">
+        <br />
+        {% if request.user.is_staff %}
+        <div class="">
+            <a class="btn btn-danger" href="{% url 'create_section' %}">New Section</a>
+        </div>
+        {% endif %}
+        <br />
+        {% for section in object_list %}
+        <div class="card mb-2 border-info">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img src="{{ section.section_logo.url }}" alt="Section logo" style="max-width:100%">
+                        <p class="mt-1 mb-0">Total discussions: {{ section.discussion_set.count }} <br>
+                        Total posts: {{section.get_number_posts_in_section }}</p>
+                    </div>
+                    <div class="col-lg-9">
+                        <h3><a class="text-decoration-none" href="{{ section.get_absolute_url }}">
+                            <strong>{{ section.section_name }}</strong>
+                        </a></h3>
+                        <h5>{{ section.section_description }}</h5>
+                        <hr>
+                        <h5>Last discussions:</h5>
+                        <table class="table table-hover">
+                            <tbody>
+                            {% for disc in section.get_last_discussions.all %}
+                                <tr class="row">
+                                    <td class="col-lg-7 col-6">
+                                        <a class="text-decoration-none" href="{% url 'show_discussion' pk=disc.pk %}">
+                                        <strong>{{ disc.discussion_title }}</strong>
+                                        </a>
+                                    </td>
+                                    <td class="col-lg-3 col-3">
+                                        <a class="text-decoration-none" href="{% url 'user_profile' username=disc.discussion_author.username %}">
+                                        {{ disc.discussion_author }}
+                                        </a></td>
+                                    <td class="col-lg-2 col-3">Posts: {{ disc.post_set.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if not section.get_last_discussions.all.exists %}
+                            <p>No discussion yet! Start a new discussion
+                                <a class="text-decoration-none" href="{% url 'create_discussion' pk=section.pk %}">here</a>!</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 {% endblock content %}

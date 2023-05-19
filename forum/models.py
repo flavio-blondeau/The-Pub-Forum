@@ -18,6 +18,12 @@ class Section(models.Model):
     def get_absolute_url(self):
         return reverse("show_section", kwargs={'pk': self.pk})
 
+    def get_last_discussions(self):
+        return Discussion.objects.filter(discussion_section=self).order_by("-discussion_creation_data")[:3]
+
+    def get_number_posts_in_section(self):
+        return Post.objects.filter(post_discussion__discussion_section=self).count()
+
     class Meta:
         verbose_name = 'Section'
         verbose_name_plural = 'Sections'

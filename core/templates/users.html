@@ -6,12 +6,29 @@
     <div class="row justify-content-center">
         <div class="col-8 text-center">
             <h2>Users List</h2>
-            <hr>
-            {% for item in object_list %}
-                <p>User: <a class="text-decoration-none" href="{% url 'user_profile' username=item.username %}">
-                    <strong>@{{ item.username }}</strong>
-                </a></p>
-            {% endfor %}
         </div>
     </div>
+    <div class="container">
+        <hr>
+        {% for item in object_list %}
+        {%  if forloop.first %} <div class="row mb-3"> {% endif %}
+                <div class="col-lg-4">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h5><a class="text-decoration-none" href="{% url 'user_profile' username=item.username %}">
+                            <strong>@{{ item.username }}</strong>
+                            </a></h5>
+                            User since: {{ item.date_joined|date:"M d, Y" }}
+                            <br>
+                            User discussions: {{ item.discussions.count }}
+                            <br>
+                            User posts: {{ item.posts.count }}
+                        </div>
+                    </div>
+
+                </div>
+        {% if forloop.counter|divisibleby:"3" or forloop.last %} </div> {% endif %}
+        {% if forloop.counter|divisibleby:"3" and not forloop.last %} <div class="row"> {% endif %}
+        {% endfor %}
+
 {% endblock content %}

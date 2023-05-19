@@ -8,7 +8,9 @@
       <div class="col-8">
           <h2>{{ discussion.discussion_title }}</h2>
           <h5 class="text-muted">{{ discussion.discussion_creation_data }}</h5>
-          <h5>In: {{ discussion.discussion_section }}</h5>
+          <h5>In: <a class="text-decoration-none" href="{% url 'show_section' pk=discussion.discussion_section.pk %}">
+              {{ discussion.discussion_section }}</a>
+          </h5>
           {% for post in discussion_posts %}
           <div class="card my-2">
               <div class="card-header py-0">

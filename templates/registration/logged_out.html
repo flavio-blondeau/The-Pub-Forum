@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head_title %} {{ block.super }} - Log Out {% endblock head_title %}
 
 {% block content %}
    <div class="row justify-content-center">
         <div class="col-6 text-center">
-            <p>You have successfully logged out!</p>
+            <img class="img-fluid mb-3" src="{% static 'closed.png' %}" alt="Closed">
+            <h5>You have successfully logged out!</h5>
             <br>
-            <p><a href="{% url 'login' %}">Click here to Log In again</a></p>
+            <h5><a class="text-decoration-none" href="{% url 'login' %}">Click here to Log In again</a></h5>
         </div>
     </div>
 {% endblock content %}

@@ -1,3 +1,6 @@
 body {
     font-family: 'Source Serif Pro', serif;
 }
+a, a:hover {
+    color: #17a2b8;
+}
