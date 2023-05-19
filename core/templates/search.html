@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head_title %} {{ block.super }} - Search {% endblock head_title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-10 text-center">
+            <h2>Search results</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h4 class="mb-4"><strong>Posts</strong></h4>
+                {% if posts %}
+                    {% for post in posts %}
+                    <p>From: <a class="text-decoration-none" href="{% url 'show_discussion' pk=post.post_discussion.pk %}">
+                        {{ post.post_discussion }}</a> <br>
+                        {{ post.post_content|truncatewords:"15" }}</p>
+                    <hr>
+                    {% endfor %}
+                {% else %}
+                <p>No posts matching your search.</p>
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <h4 class="mb-4"><strong>Discussions</strong></h4>
+                {% if discussions %}
+                    {% for disc in discussions %}
+                    <h5 class="mb-4"><a class="text-decoration-none" href="{% url 'show_discussion' pk=disc.pk %}">
+                        {{ disc.discussion_title }}</a></h5>
+                    {% endfor %}
+                {% else %}
+                <p>No discussions matching your search.</p>
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <h4 class="mb-4"><strong>Users</strong></h4>
+                {% if users %}
+                    {% for user in users %}
+                    <h5 class="mb-4"><a class="text-decoration-none" href="{% url 'user_profile' username=user.username %}">
+                        {{ user.username }}</a></h5>
+                    {% endfor %}
+                {% else %}
+                <p>No users matching your search.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -21,8 +21,8 @@
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex me-auto" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search">
+                    <form class="d-flex me-auto mb-0" role="search" action="{% url 'search' %}">
+                        <input name="q" class="form-control me-2" type="search" placeholder="Search here" aria-label="Search">
                         <button class="btn btn-outline-info" type="submit">Search</button>
                     </form>
                     <ul class="navbar-nav me-auto offset-md-4 mb-2 mb-lg-0">
