@@ -14,7 +14,12 @@
           {% for post in posts_in_page %}
           <div class="card my-2">
               <div class="card-header py-0">
-                  <footer>{{ post.post_creation_data }}</footer>
+                  <footer>{{ post.post_creation_data }}
+                      {% if request.user == post.post_author %}
+                       - <a class="text-decoration-none" href="{% url 'delete_post' id=discussion.pk pk=post.pk %}">Delete</a>
+                      {% endif %}
+                  </footer>
+
               </div>
               <div class="card-body">
                   <div class="row">

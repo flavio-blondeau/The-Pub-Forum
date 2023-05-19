@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from .forms import DiscussionModelForm, PostModelForm
 from .mixins import StaffMixin
@@ -82,3 +82,12 @@ def add_post(request, pk):  # here the pk is the discussion's one
                 return HttpResponseRedirect(discussion_url)
     else:
         return HttpResponseBadRequest()
+
+
+class DeletePost(DeleteView):
+    model = Post
+    success_url = "/"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(post_author_id=self.request.user.id)
