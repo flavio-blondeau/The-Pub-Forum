@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -51,9 +52,12 @@ def create_discussion(request, pk):
 def show_discussion(request, pk):
     discussion = get_object_or_404(Discussion, pk=pk)
     discussion_posts = Post.objects.filter(post_discussion=discussion)
+    paginator = Paginator(discussion_posts, 5)
+    page = request.GET.get("page")
+    posts_in_page = paginator.get_page(page)
     answer_form = PostModelForm()
     context = {'discussion': discussion,
-               'discussion_posts': discussion_posts,
+               'posts_in_page': posts_in_page,
                'answer_form': answer_form
                }
     return render(request, "show_discussion.html", context)
@@ -70,6 +74,11 @@ def add_post(request, pk):  # here the pk is the discussion's one
             form.instance.post_author = request.user
             form.save()
             discussion_url = reverse("show_discussion", kwargs={"pk": pk})
-            return HttpResponseRedirect(discussion_url)
+            last_page = discussion.get_number_pages()
+            if last_page > 1:
+                success_url = discussion_url + "?page=" + str(last_page)
+                return HttpResponseRedirect(success_url)
+            else:
+                return HttpResponseRedirect(discussion_url)
     else:
         return HttpResponseBadRequest()

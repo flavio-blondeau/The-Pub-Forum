@@ -11,7 +11,7 @@
           <h5>In: <a class="text-decoration-none" href="{% url 'show_section' pk=discussion.discussion_section.pk %}">
               {{ discussion.discussion_section }}</a>
           </h5>
-          {% for post in discussion_posts %}
+          {% for post in posts_in_page %}
           <div class="card my-2">
               <div class="card-header py-0">
                   <footer>{{ post.post_creation_data }}</footer>
@@ -32,6 +32,24 @@
               </div>
           </div>
           {% endfor %}
+
+          <div class="text-end">
+              <span class="step-links">
+                  {% if posts_in_page.has_previous %}
+                    <a href="?page=1">&laquo; first</a> &nbsp;
+                    <a href="?page={{ posts_in_page.previous_page_number }}">previous</a> &nbsp;
+                  {% endif %}
+
+                  <span class="current">
+                      Page {{ posts_in_page.number }} of {{ posts_in_page.paginator.num_pages }}
+                  </span> &nbsp;
+
+                  {% if posts_in_page.has_next %}
+                      <a href="?page={{ posts_in_page.next_page_number }}">next</a> &nbsp;
+                      <a href="?page={{ posts_in_page.paginator.num_pages }}">last &raquo;</a>
+                  {% endif %}
+              </span>
+          </div>
 
           {% if request.user.is_authenticated %}
               {% include 'answer_form.html' %}

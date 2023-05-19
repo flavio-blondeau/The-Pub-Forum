@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from math import ceil
 
 
 class Section(models.Model):
@@ -45,6 +46,11 @@ class Discussion(models.Model):
 
     def get_absolute_url(self):
         return reverse("show_discussion", kwargs={'pk': self.pk})
+
+    def get_number_pages(self):
+        discussion_posts = self.post_set.count()
+        number_pages = ceil(discussion_posts / 5)
+        return number_pages
 
     class Meta:
         verbose_name = 'Discussion'
